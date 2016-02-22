@@ -18,13 +18,17 @@ package org.kie.demo.bankapp.client;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import org.gwtbootstrap3.client.ui.Button;
 import org.gwtbootstrap3.client.ui.TextBox;
+import org.gwtbootstrap3.client.ui.constants.ValidationState;
 import org.jboss.errai.ui.shared.api.annotations.DataField;
 import org.jboss.errai.ui.shared.api.annotations.EventHandler;
 import org.jboss.errai.ui.shared.api.annotations.Templated;
+import org.kie.demo.bankapp.client.util.StyleHelper;
 
 @Dependent
 @Templated
@@ -61,11 +65,10 @@ public class MortgageFormView extends Composite
 
     @Inject
     @DataField
-    TextBox preferential;
-
-    @Inject
-    @DataField
     TextBox approved;
+
+    @DataField("approved-form")
+    Element approvedForm = DOM.createDiv();
 
     @Inject
     @DataField
@@ -118,11 +121,6 @@ public class MortgageFormView extends Composite
     }
 
     @Override
-    public String getPreferential() {
-        return preferential.getText();
-    }
-
-    @Override
     public String getApproved() {
         return approved.getText();
     }
@@ -160,16 +158,24 @@ public class MortgageFormView extends Composite
         this.score.setText( score );
     }
 
-    public void setPreferential( final String preferential ) {
-        this.preferential.setText( preferential );
-    }
-
     public void setApproved( final String approved ) {
         this.approved.setText( approved );
     }
 
     public void setInterest( final String interest ) {
         this.interest.setText( interest );
+    }
+
+    @Override
+    public void setAsApproved() {
+        StyleHelper.addUniqueEnumStyleName( approvedForm, ValidationState.class, ValidationState.SUCCESS );
+        setApproved( "No" );
+    }
+
+    @Override
+    public void setAsNotApproved() {
+        StyleHelper.addUniqueEnumStyleName( approvedForm, ValidationState.class, ValidationState.ERROR );
+        setApproved( "Yes" );
     }
 
     @EventHandler("apply")

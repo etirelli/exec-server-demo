@@ -19,7 +19,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.IsWidget;
 import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.RemoteCallback;
@@ -51,8 +50,6 @@ public class MortgageFormPresenter {
 
         String getScore();
 
-        String getPreferential();
-
         String getApproved();
 
         String getInterest();
@@ -71,11 +68,13 @@ public class MortgageFormPresenter {
 
         void setScore( final String score );
 
-        void setPreferential( final String preferential );
-
         void setApproved( final String approved );
 
         void setInterest( final String interest );
+
+        void setAsApproved();
+
+        void setAsNotApproved();
     }
 
     @Inject
@@ -99,12 +98,18 @@ public class MortgageFormPresenter {
         return view;
     }
 
+    int count = 0;
+
     public void apply() {
+        count++;
         decisionServerService.call( new RemoteCallback<Mortgage>() {
             @Override
             public void callback( final Mortgage result ) {
-                view.setAmortization( result.getAmortization() );
-                Window.alert( "content: " + result );
+                if ( count % 3 == 0 ) {
+                    view.setAsApproved();
+                } else {
+                    view.setAsNotApproved();
+                }
             }
         } ).process( new Applicant( view.getName(), view.getAge(), view.getIncome() ) );
     }
