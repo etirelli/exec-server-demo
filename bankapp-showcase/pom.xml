@@ -25,6 +25,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.drools.demo.ds</groupId>
+      <artifactId>banking-model</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-all</artifactId>
       <exclusions>
@@ -33,6 +38,11 @@
           <artifactId>log4j</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.kie.server</groupId>
+      <artifactId>kie-server-client</artifactId>
     </dependency>
 
     <dependency>

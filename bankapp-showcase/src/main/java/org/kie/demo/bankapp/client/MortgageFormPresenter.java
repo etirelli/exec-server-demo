@@ -105,12 +105,13 @@ public class MortgageFormPresenter {
         decisionServerService.call( new RemoteCallback<Mortgage>() {
             @Override
             public void callback( final Mortgage result ) {
-                if ( count % 3 == 0 ) {
+                if ( "Yes".equalsIgnoreCase( result.getApproved() ) ) {
                     view.setAsApproved();
                 } else {
                     view.setAsNotApproved();
                 }
             }
-        } ).process( new Applicant( view.getName(), view.getAge(), view.getIncome() ) );
+        } ).process( new Applicant( view.getName(), view.getAge(), view.getIncome(), view.getScore() ),
+                     new Mortgage( view.getTerm(), view.getAmortization(), view.getAmount(), view.getInterest(), view.getApproved() ));
     }
 }

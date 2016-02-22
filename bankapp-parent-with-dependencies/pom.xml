@@ -47,6 +47,7 @@
     <version.org.freemarker>2.3.19</version.org.freemarker>
 
     <version.org.mvel>2.1.8.Final</version.org.mvel>
+    <version.org.kie>6.4.0-SNAPSHOT</version.org.kie>
 
     <version.com.google.gwt>2.7.0</version.com.google.gwt>
     <version.com.github.gwtbootstrap>2.2.1.0</version.com.github.gwtbootstrap>
@@ -109,11 +110,23 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>org.drools.demo.ds</groupId>
+        <artifactId>banking-model</artifactId>
+        <version>1.0.0</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.uberfire</groupId>
         <artifactId>uberfire-bom</artifactId>
         <type>pom</type>
         <version>${version.org.uberfire}</version>
         <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.kie.server</groupId>
+        <artifactId>kie-server-client</artifactId>
+        <version>${version.org.kie}</version>
       </dependency>
 
       <dependency>
