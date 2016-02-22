@@ -169,14 +169,14 @@ public class MortgageFormView extends Composite
     @Override
     public void setAsApproved() {
         StyleHelper.addUniqueEnumStyleName( approvedForm, ValidationState.class, ValidationState.SUCCESS );
-        setApproved( "No" );
+        setApproved( "Yes" );
         this.approved.getElement().getStyle().setBackgroundColor( "#d5ff80" );
     }
 
     @Override
     public void setAsNotApproved() {
         StyleHelper.addUniqueEnumStyleName( approvedForm, ValidationState.class, ValidationState.ERROR );
-        setApproved( "Yes" );
+        setApproved( "No" );
         this.approved.getElement().getStyle().setBackgroundColor( "#ff6666" );
     }
 
