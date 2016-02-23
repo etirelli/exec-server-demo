@@ -37,7 +37,7 @@ public class DecisionServerServiceImpl implements DecisionServerService {
     private static final String USER_PWD   = "kieserver1!";
 
     private static final String CONTAINER_ID = "mortgage";
-    private static final String KIE_SESSION  = "defaultKieSession";
+    private static final String KIE_SESSION  = "defaultStatelessKieSession";
     private static final String MA_OUT_ID = "ma";
 
     @Override
@@ -59,21 +59,21 @@ public class DecisionServerServiceImpl implements DecisionServerService {
         BatchExecutionCommand batchExecution = cf.newBatchExecution( commands, KIE_SESSION );
 
         Customer c = new Customer();
-        c.setAge( applicant.getAge() != null ? Integer.parseInt( applicant.getAge() ) : null );
+        c.setAge( applicant.getAge() != null && !applicant.getAge().isEmpty() ? Integer.parseInt( applicant.getAge() ) : null );
         c.setName( applicant.getName() );
-        c.setCreditScore( applicant.getCreditScore() != null ? Integer.parseInt( applicant.getCreditScore() ) : null );
-        c.setIncome( applicant.getIncome() != null ? Integer.parseInt( applicant.getIncome() ) : null );
+        c.setCreditScore( applicant.getCreditScore() != null && !applicant.getCreditScore().isEmpty() ? Integer.parseInt( applicant.getCreditScore() ) : null );
+        c.setIncome( applicant.getIncome() != null && !applicant.getIncome().isEmpty() ? Integer.parseInt( applicant.getIncome() ) : null );
 
-        MortgageApplication ma = new MortgageApplication(  );
-        ma.setAmortization( mortgage.getAmortization() != null ? Integer.parseInt( mortgage.getAmortization() ) : null );
-        ma.setInterestRate( mortgage.getInterest() != null ? Double.parseDouble( mortgage.getInterest() ) : null );
-        ma.setAmount( mortgage.getAmount() != null ? Integer.parseInt( mortgage.getAmount() ) : null );
+        MortgageApplication ma = new MortgageApplication();
+        ma.setAmortization( mortgage.getAmortization() != null && !mortgage.getAmortization().isEmpty() ? Integer.parseInt( mortgage.getAmortization() ) : null );
+        ma.setInterestRate( mortgage.getInterest() != null && !mortgage.getInterest().isEmpty() ? Double.parseDouble( mortgage.getInterest() ) : null );
+        ma.setAmount( mortgage.getAmount() != null && !mortgage.getAmount().isEmpty() ? Integer.parseInt( mortgage.getAmount() ) : null );
 
         commands.add( cf.newInsert( c ) );
         commands.add( cf.newInsert( ma, MA_OUT_ID ) );
         commands.add( cf.newFireAllRules() );
-        commands.add( cf.newDeleteObject( c, EntryPointId.DEFAULT.getEntryPointId() ) );
-        commands.add( cf.newDeleteObject( ma, EntryPointId.DEFAULT.getEntryPointId() ) );
+        //commands.add( cf.newDeleteObject( c, EntryPointId.DEFAULT.getEntryPointId() ) );
+//        commands.add( cf.newDeleteObject( ma, EntryPointId.DEFAULT.getEntryPointId() ) );
 
         ServiceResponse<String> reply = ruleClient.executeCommands( CONTAINER_ID, batchExecution );
         String approved = "No";
