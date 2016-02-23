@@ -130,6 +130,12 @@
       </dependency>
 
       <dependency>
+        <groupId>org.drools</groupId>
+        <artifactId>drools-compiler</artifactId>
+        <version>${version.org.kie}</version>
+      </dependency>
+
+      <dependency>
         <groupId>org.jboss.errai.bom</groupId>
         <artifactId>errai-internal-bom</artifactId>
         <type>pom</type>

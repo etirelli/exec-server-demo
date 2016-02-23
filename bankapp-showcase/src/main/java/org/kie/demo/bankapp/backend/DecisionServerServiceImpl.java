@@ -32,7 +32,7 @@ import java.util.List;
 @ApplicationScoped
 public class DecisionServerServiceImpl implements DecisionServerService {
 
-    private static final String SERVER_URL = "http://localhost:8080/kie-server/services/rest/server";
+    private static final String SERVER_URL = "http://localhost:8180/kie-server/services/rest/server";
     private static final String USER_NAME  = "kieserver";
     private static final String USER_PWD   = "kieserver1!";
 
