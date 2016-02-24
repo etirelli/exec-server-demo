@@ -32,7 +32,7 @@ import java.util.List;
 @ApplicationScoped
 public class DecisionServerServiceImpl implements DecisionServerService {
 
-    private static final String SERVER_URL = "http://localhost:8180/kie-server/services/rest/server";
+    private static final String SERVER_URL = "http://localhost:8080/kie-server/services/rest/server";
     private static final String USER_NAME  = "kieserver";
     private static final String USER_PWD   = "kieserver1!";
 
@@ -41,7 +41,10 @@ public class DecisionServerServiceImpl implements DecisionServerService {
     private static final String MA_OUT_ID = "ma";
 
     @Override
-    public Mortgage process(final Applicant applicant, final Mortgage mortgage) {
+    public Mortgage process(String service, final Applicant applicant, final Mortgage mortgage) {
+        if( service == null ) {
+            service = CONTAINER_ID;
+        }
         HashSet<Class<?>> classes = new HashSet<Class<?>>();
         classes.add( Customer.class );
         classes.add( MortgageApplication.class );
@@ -72,10 +75,8 @@ public class DecisionServerServiceImpl implements DecisionServerService {
         commands.add( cf.newInsert( c ) );
         commands.add( cf.newInsert( ma, MA_OUT_ID ) );
         commands.add( cf.newFireAllRules() );
-        //commands.add( cf.newDeleteObject( c, EntryPointId.DEFAULT.getEntryPointId() ) );
-//        commands.add( cf.newDeleteObject( ma, EntryPointId.DEFAULT.getEntryPointId() ) );
 
-        ServiceResponse<String> reply = ruleClient.executeCommands( CONTAINER_ID, batchExecution );
+        ServiceResponse<String> reply = ruleClient.executeCommands( service, batchExecution );
         String approved = "No";
         if( reply.getType() == ServiceResponse.ResponseType.SUCCESS ) {
             ExecutionResults results = marshaller.unmarshall( reply.getResult(), ExecutionResultImpl.class );

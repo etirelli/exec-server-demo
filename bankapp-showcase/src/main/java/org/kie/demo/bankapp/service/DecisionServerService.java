@@ -7,6 +7,6 @@ import org.kie.demo.bankapp.model.Mortgage;
 @Remote
 public interface DecisionServerService {
 
-    Mortgage process( final Applicant applicant, final Mortgage mortgage );
+    Mortgage process( final String service, final Applicant applicant, final Mortgage mortgage );
 
 }

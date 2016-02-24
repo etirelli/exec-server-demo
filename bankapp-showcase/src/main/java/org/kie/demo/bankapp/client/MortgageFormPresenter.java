@@ -54,6 +54,8 @@ public class MortgageFormPresenter {
 
         String getInterest();
 
+        String getService();
+
         void setName( final String name );
 
         void setAge( final String age );
@@ -71,6 +73,8 @@ public class MortgageFormPresenter {
         void setApproved( final String approved );
 
         void setInterest( final String interest );
+
+        void setService( final String service );
 
         void setAsApproved();
 
@@ -111,7 +115,8 @@ public class MortgageFormPresenter {
                     view.setAsNotApproved();
                 }
             }
-        } ).process( new Applicant( view.getName(), view.getAge(), view.getIncome(), view.getScore() ),
+        } ).process( view.getService(),
+                     new Applicant( view.getName(), view.getAge(), view.getIncome(), view.getScore() ),
                      new Mortgage( view.getTerm(), view.getAmortization(), view.getAmount(), view.getInterest(), view.getApproved() ));
     }
 }

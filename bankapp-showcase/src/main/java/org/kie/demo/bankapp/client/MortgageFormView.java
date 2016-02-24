@@ -76,6 +76,10 @@ public class MortgageFormView extends Composite
 
     @Inject
     @DataField
+    TextBox service;
+
+    @Inject
+    @DataField
     Button apply;
 
     private MortgageFormPresenter presenter;
@@ -130,6 +134,11 @@ public class MortgageFormView extends Composite
         return interest.getText();
     }
 
+    @Override
+    public String getService() {
+        return service.getText();
+    }
+
     public void setName( final String name ) {
         this.name.setText( name );
     }
@@ -165,6 +174,8 @@ public class MortgageFormView extends Composite
     public void setInterest( final String interest ) {
         this.interest.setText( interest );
     }
+
+    public void setService( final String service ) { this.service.setText( service ); }
 
     @Override
     public void setAsApproved() {
